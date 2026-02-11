@@ -1,6 +1,7 @@
 import arcade from '../../images/icon-arcade.svg';
 import advanced from '../../images/icon-advanced.svg';
 import pro from '../../images/icon-pro.svg';
+import { cn } from '../../lib/utils';
 
 export default function StepPlan({ data, onChange }) {
 	const plans = [
@@ -39,33 +40,95 @@ export default function StepPlan({ data, onChange }) {
 				<p className='text-neutral-grey-500 mt-2 mb-6'>
 					You have the option of monthly or yearly billing.
 				</p>
-				<form className='flex flex-col gap-4'>
+				<fieldset className='flex flex-col gap-4 mb-6'>
+					<legend className='sr-only'>Choose a plan</legend>
+
 					{plans.map((plan) => (
 						<div key={plan.name}>
 							<input
 								type='radio'
 								name='plan'
 								id={plan.name}
-								className='hidden peer'
-								value={plan.name}
-								onChange={() => onChange('plan', plan)}
+								className='peer sr-only'
 								checked={data.plan?.name === plan.name}
+								onChange={() => onChange('plan', plan)}
 							/>
+
 							<label
 								htmlFor={plan.name}
-								className='flex items-center gap-4 p-4 border border-neutral-grey-500 rounded-lg peer-checked:border-primary-blue-950 peer-checked:bg-neutral-blue-100 cursor-pointer hover:border-primary-blue-950'
+								className={cn(
+									'flex items-center gap-4 border border-neutral-grey-500 rounded-lg cursor-pointer hover:border-primary-blue-950 peer-checked:border-primary-blue-950 peer-checked:bg-neutral-blue-100',
+									data.billing === 'yearly'
+										? 'items-start px-3 pt-3 pb-4.5'
+										: 'items-center p-3',
+								)}
 							>
 								<img src={plan.icon} alt='' aria-hidden />
-								<div className='flex flex-col'>
+								<div>
 									<p className='capitalize font-medium text-primary-blue-950'>
 										{plan.name}
 									</p>
-									<p className='text-neutral-grey-500'>{`$${plan.price.monthly}/mo`}</p>
+									<p className='text-neutral-grey-500 mb-1 text-sm'>
+										{data.billing === 'monthly'
+											? `$${plan.price.monthly}/mo`
+											: `$${plan.price.yearly}/yr`}
+									</p>
+									{data.billing === 'yearly' && (
+										<p className='text-xs text-primary-blue-950'>
+											2 month free
+										</p>
+									)}
 								</div>
 							</label>
 						</div>
 					))}
-				</form>
+				</fieldset>
+				<div className='flex items-center justify-center gap-6 rounded-lg bg-neutral-blue-100 py-4'>
+					<span
+						className={`text-sm font-medium ${
+							data.billing === 'monthly'
+								? 'text-primary-blue-950'
+								: 'text-neutral-grey-500'
+						}`}
+					>
+						Monthly
+					</span>
+
+					<label className='relative inline-flex items-center cursor-pointer'>
+						<input
+							type='checkbox'
+							className='sr-only peer'
+							checked={data.billing === 'yearly'}
+							onChange={(e) =>
+								onChange(
+									'billing',
+									e.target.checked ? 'yearly' : 'monthly',
+								)
+							}
+						/>
+						<div
+							className="w-9 h-5 bg-primary-blue-950 rounded-full
+                 after:content-['']
+                 after:absolute after:top-1 after:left-1
+                 after:w-3 after:h-3
+                 after:bg-neutral-blue-100
+                 after:rounded-full
+                 after:transition-all
+                 peer-checked:after:translate-x-4"
+						/>
+						<span className='sr-only'>Toggle yearly billing</span>
+					</label>
+
+					<span
+						className={`text-sm font-medium ${
+							data.billing === 'yearly'
+								? 'text-primary-blue-950'
+								: 'text-neutral-grey-500'
+						}`}
+					>
+						Yearly
+					</span>
+				</div>
 			</div>
 		</div>
 	);

@@ -13,6 +13,7 @@ export default function App() {
 		email: '',
 		phone: '',
 		plan: null,
+		billing: 'monthly',
 		addons: [],
 	});
 
