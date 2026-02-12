@@ -8,13 +8,6 @@ import StepSummary from './components/steps/StepSummary';
 import SubsSuccess from './components/steps/SubsSuccess';
 import { validateStep } from './lib/validation';
 
-const STEP_TITLES = {
-	1: 'Your info',
-	2: 'Select plan',
-	3: 'Add-ons',
-	4: 'Summary',
-};
-
 export default function App() {
 	const [currentStep, setCurrentStep] = useState(1);
 	const [isSubmitted, setIsSubmitted] = useState(false);
@@ -135,37 +128,21 @@ export default function App() {
 	}
 
 	return (
-		<div className='bg-neutral-blue-100 grid grid-cols-1 min-h-svh'>
-			<h1 className='sr-only'>Subscription Setup</h1>
-
-			<div aria-live='polite' aria-atomic='true' className='sr-only'>
-				{!isSubmitted
-					? `Step ${currentStep} of 4: ${STEP_TITLES[currentStep]}`
-					: 'Subscription confirmed successfully'}
+		<section className='min-h-svh flex items-center justify-center bg-neutral-blue-100'>
+			<div className='bg-neutral-white grid grid-cols-1 lg:grid-cols-[auto_auto] shadow-lg lg:p-4 lg:rounded-xl'>
+				<StepSidebar
+					currentStep={currentStep}
+					onCurrentStep={onCurrentStep}
+				/>
+				{isSubmitted ? (
+					<SubsSuccess headingRef={headingRef} />
+				) : (
+					<form onSubmit={handleSubmit} noValidate className='lg:flex lg:flex-col lg:justify-between'>
+						{renderStep()}
+						<Navigation currentStep={currentStep} onBack={prevStep} />
+					</form>
+				)}
 			</div>
-
-			{Object.keys(errors).length > 0 && (
-				<div aria-live='assertive' aria-atomic='true' className='sr-only'>
-					{`Errors: ${Object.values(errors).join('. ')}`}
-				</div>
-			)}
-
-			<StepSidebar
-				currentStep={currentStep}
-				onCurrentStep={onCurrentStep}
-			/>
-
-			{isSubmitted ? (
-				<SubsSuccess headingRef={headingRef} />
-			) : (
-				<form onSubmit={handleSubmit} noValidate>
-					{renderStep()}
-					<Navigation
-						currentStep={currentStep}
-						onBack={prevStep}
-					/>
-				</form>
-			)}
-		</div>
+		</section>
 	);
 }

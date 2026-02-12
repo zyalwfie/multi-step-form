@@ -5,7 +5,7 @@ export default function Navigation({ currentStep, onBack }) {
 		<nav
 			aria-label='Form navigation'
 			className={cn(
-				'flex items-center bg-neutral-white p-4',
+				'flex items-center bg-neutral-white p-4 lg:px-28',
 				currentStep > 1 ? 'justify-between' : 'justify-end',
 			)}
 		>
@@ -21,10 +21,10 @@ export default function Navigation({ currentStep, onBack }) {
 			<button
 				type='submit'
 				className={cn(
-					'px-4 py-2.5 rounded text-sm',
+					'px-4 py-2.5 rounded text-sm font-medium lg:text-base lg:px-6 lg:py-3 lg:rounded-lg transition cursor-pointer',
 					currentStep === 4
 						? 'bg-primary-purple-600 text-neutral-purple-200'
-						: 'bg-primary-blue-950 text-neutral-blue-100',
+						: 'bg-primary-blue-950 text-neutral-blue-100 hover:bg-primary-blue-300 hover:text-primary-blue-950',
 				)}
 			>
 				{currentStep === 4 ? 'Confirm' : 'Next Step'}
