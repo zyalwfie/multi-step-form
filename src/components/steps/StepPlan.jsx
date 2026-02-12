@@ -3,7 +3,7 @@ import advanced from '../../images/icon-advanced.svg';
 import pro from '../../images/icon-pro.svg';
 import { cn } from '../../lib/utils';
 
-export default function StepPlan({ data, onChange }) {
+export default function StepPlan({ data, onChange, errors, headingRef }) {
 	const plans = [
 		{
 			icon: arcade,
@@ -31,17 +31,32 @@ export default function StepPlan({ data, onChange }) {
 		},
 	];
 
+	const billingLabel = data.billing === 'monthly' ? 'month' : 'year';
+
 	return (
 		<div className='px-4 pt-7 pb-5'>
 			<div className='bg-neutral-white rounded-lg px-6 py-7 shadow-lg relative -translate-y-25 max-w-sm mx-auto'>
-				<h1 className='text-2xl font-bold text-primary-blue-950'>
+				<h2
+					ref={headingRef}
+					tabIndex={-1}
+					className='text-2xl font-bold text-primary-blue-950 outline-none'
+				>
 					Select your plan
-				</h1>
+				</h2>
 				<p className='text-neutral-grey-500 mt-2 mb-6'>
 					You have the option of monthly or yearly billing.
 				</p>
 				<fieldset className='flex flex-col gap-4 mb-6'>
 					<legend className='sr-only'>Choose a plan</legend>
+
+					{errors?.plan && (
+						<p
+							className='text-primary-red-500 text-xs font-bold'
+							role='alert'
+						>
+							{errors.plan}
+						</p>
+					)}
 
 					{plans.map((plan) => (
 						<div key={plan.name}>
@@ -52,6 +67,7 @@ export default function StepPlan({ data, onChange }) {
 								className='peer sr-only'
 								checked={data.plan?.name === plan.name}
 								onChange={() => onChange('plan', plan)}
+								aria-label={`${plan.name}, $${plan.price[data.billing]} per ${billingLabel}`}
 							/>
 
 							<label
@@ -63,7 +79,7 @@ export default function StepPlan({ data, onChange }) {
 										: 'items-center p-3',
 								)}
 							>
-								<img src={plan.icon} alt='' aria-hidden />
+								<img src={plan.icon} alt='' aria-hidden='true' />
 								<div>
 									<p className='capitalize font-medium text-primary-blue-950'>
 										{plan.name}
@@ -75,7 +91,7 @@ export default function StepPlan({ data, onChange }) {
 									</p>
 									{data.billing === 'yearly' && (
 										<p className='text-xs text-primary-blue-950'>
-											2 month free
+											2 months free
 										</p>
 									)}
 								</div>
@@ -94,30 +110,26 @@ export default function StepPlan({ data, onChange }) {
 						Monthly
 					</span>
 
-					<label className='relative inline-flex items-center cursor-pointer'>
-						<input
-							type='checkbox'
-							className='sr-only peer'
-							checked={data.billing === 'yearly'}
-							onChange={(e) =>
-								onChange(
-									'billing',
-									e.target.checked ? 'yearly' : 'monthly',
-								)
-							}
+					<button
+						type='button'
+						role='switch'
+						aria-checked={data.billing === 'yearly'}
+						aria-label='Billing period'
+						onClick={() =>
+							onChange(
+								'billing',
+								data.billing === 'yearly' ? 'monthly' : 'yearly',
+							)
+						}
+						className='relative inline-flex items-center cursor-pointer w-9 h-5 bg-primary-blue-950 rounded-full'
+					>
+						<span
+							className={cn(
+								'absolute top-1 left-1 w-3 h-3 bg-neutral-blue-100 rounded-full transition-all',
+								data.billing === 'yearly' && 'translate-x-4',
+							)}
 						/>
-						<div
-							className="w-9 h-5 bg-primary-blue-950 rounded-full
-                 after:content-['']
-                 after:absolute after:top-1 after:left-1
-                 after:w-3 after:h-3
-                 after:bg-neutral-blue-100
-                 after:rounded-full
-                 after:transition-all
-                 peer-checked:after:translate-x-4"
-						/>
-						<span className='sr-only'>Toggle yearly billing</span>
-					</label>
+					</button>
 
 					<span
 						className={`text-sm font-medium ${

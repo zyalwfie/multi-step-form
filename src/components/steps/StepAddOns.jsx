@@ -1,7 +1,7 @@
 import { Check } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
-export default function StepAddOns({ data, onChange }) {
+export default function StepAddOns({ data, onChange, headingRef }) {
 	const addOns = [
 		{
 			slug: 'online-service',
@@ -48,9 +48,13 @@ export default function StepAddOns({ data, onChange }) {
 	return (
 		<div className='px-4 pt-7 pb-5'>
 			<div className='bg-neutral-white rounded-lg px-6 pt-7 pb-2 shadow-lg relative -translate-y-25 max-w-sm mx-auto'>
-				<h1 className='text-2xl font-bold text-primary-blue-950'>
+				<h2
+					ref={headingRef}
+					tabIndex={-1}
+					className='text-2xl font-bold text-primary-blue-950 outline-none'
+				>
 					Pick add-ons
-				</h1>
+				</h2>
 				<p className='text-neutral-grey-500 mt-2 mb-6'>
 					Add-ons help enhance your gaming experience.
 				</p>
@@ -87,6 +91,7 @@ export default function StepAddOns({ data, onChange }) {
 												? 'bg-primary-purple-600 border-primary-purple-600'
 												: '',
 										)}
+										aria-hidden='true'
 									>
 										<Check
 											className='size-3 text-neutral-white'
@@ -94,9 +99,9 @@ export default function StepAddOns({ data, onChange }) {
 										/>
 									</div>
 									<div>
-										<h2 className='text-primary-blue-950 leading-tight text-sm font-medium'>
+										<h3 className='text-primary-blue-950 leading-tight text-sm font-medium'>
 											{addon.name}
-										</h2>
+										</h3>
 										<p className='text-xs text-neutral-grey-500'>
 											{addon.shortDesc}
 										</p>

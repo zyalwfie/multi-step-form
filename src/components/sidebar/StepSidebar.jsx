@@ -1,11 +1,18 @@
 import bgSidebarMobile from '../../images/bg-sidebar-mobile.svg';
 import { cn } from '../../lib/utils';
 
+const STEP_LABELS = {
+	1: 'Your info',
+	2: 'Select plan',
+	3: 'Add-ons',
+	4: 'Summary',
+};
+
 export default function StepSidebar({ currentStep, onCurrentStep }) {
 	return (
 		<aside className='relative bg-red-500'>
-			<img src={bgSidebarMobile} alt='' aria-hidden className='w-full' />
-			<div className='absolute top-8 left-1/2 -translate-x-1/2 min-w-max flex items-center gap-4'>
+			<img src={bgSidebarMobile} alt='' aria-hidden='true' className='w-full' />
+			<nav aria-label='Form steps' className='absolute top-8 left-1/2 -translate-x-1/2 min-w-max flex items-center gap-4'>
 				{[1, 2, 3, 4].map((step) => (
 					<button
 						className={cn(
@@ -17,11 +24,13 @@ export default function StepSidebar({ currentStep, onCurrentStep }) {
 						type='button'
 						key={step}
 						onClick={() => onCurrentStep(step)}
+						aria-label={`Step ${step}: ${STEP_LABELS[step]}`}
+						aria-current={currentStep === step ? 'step' : undefined}
 					>
 						{step}
 					</button>
 				))}
-			</div>
+			</nav>
 		</aside>
 	);
 }
