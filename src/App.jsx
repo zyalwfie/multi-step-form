@@ -7,7 +7,7 @@ import StepPlan from './components/steps/StepPlan';
 import StepSummary from './components/steps/StepSummary';
 
 export default function App() {
-	const [currentStep, setCurrentStep] = useState(2);
+	const [currentStep, setCurrentStep] = useState(3);
 	const [formData, setFormData] = useState({
 		name: '',
 		email: '',
@@ -62,7 +62,17 @@ export default function App() {
 				);
 
 			case 3:
-				return <StepAddOns />;
+				return (
+					<StepAddOns
+						data={formData}
+						onChange={(field, value) =>
+							setFormData((prev) => ({
+								...prev,
+								[field]: value,
+							}))
+						}
+					/>
+				);
 
 			case 4:
 				return <StepSummary />;
