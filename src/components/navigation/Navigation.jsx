@@ -5,14 +5,14 @@ export default function Navigation({ currentStep, onBack }) {
 		<nav
 			aria-label='Form navigation'
 			className={cn(
-				'flex items-center bg-neutral-white p-4 lg:px-28',
+				'flex items-center bg-neutral-white p-4 lg:px-20',
 				currentStep > 1 ? 'justify-between' : 'justify-end',
 			)}
 		>
 			{currentStep > 1 && (
 				<button
 					type='button'
-					className='text-sm text-neutral-grey-500 cursor-pointer'
+					className='text-sm text-neutral-grey-500 cursor-pointer hover:text-primary-blue-950 transition'
 					onClick={onBack}
 				>
 					Go Back

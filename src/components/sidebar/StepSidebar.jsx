@@ -29,7 +29,7 @@ export default function StepSidebar({ currentStep, onCurrentStep }) {
 				className='absolute top-8 left-1/2 -translate-x-1/2 min-w-max flex items-center gap-4 lg:flex lg:flex-col lg:items-start lg:left-6 lg:translate-x-0'
 			>
 				{[1, 2, 3, 4].map((step) => (
-					<div className='lg:flex lg:items-center gap-4'>
+					<div className='lg:flex lg:items-center gap-4' key={step}>
 						<button
 							className={cn(
 								'rounded-full border size-8 text-neutral-white hover:bg-primary-blue-200 hover:text-primary-blue-950 font-medium cursor-pointer hover:border-primary-blue-300',
@@ -38,14 +38,13 @@ export default function StepSidebar({ currentStep, onCurrentStep }) {
 									: 'bg-transparent border-neutral-white',
 							)}
 							type='button'
-							key={step}
 							onClick={() => onCurrentStep(step)}
 							aria-label={`Step ${step}: ${STEP_LABELS[step]}`}
 							aria-current={currentStep === step ? 'step' : undefined}
 						>
 							{step}
 						</button>
-						<div>
+						<div className='hidden lg:block'>
 							<span className='text-sm text-neutral-grey-500'>STEP {step}</span>
 							<p className='uppercase text-neutral-purple-200 font-bold tracking-wider text-sm leading-6'>{STEP_LABELS[step]}</p>
 						</div>

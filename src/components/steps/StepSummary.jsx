@@ -12,12 +12,12 @@ export default function StepSummary({ data, onCurrentStep, headingRef }) {
 	const total = planPrice + addonsTotal;
 
 	return (
-		<div className='px-4 pt-7 pb-5'>
-			<div className='bg-neutral-white rounded-lg px-6 py-7 shadow-lg relative -translate-y-25 max-w-sm mx-auto'>
+		<div className='px-4 pt-7 pb-5 lg:px-20'>
+			<div className='bg-neutral-white rounded-lg px-6 py-7 lg:p-0 shadow-lg lg:shadow-none lg:max-w-max relative -translate-y-25 max-w-sm mx-auto lg:translate-y-0'>
 				<h2
 					ref={headingRef}
 					tabIndex={-1}
-					className='text-2xl font-bold text-primary-blue-950 outline-none'
+					className='text-2xl lg:text-3xl font-bold text-primary-blue-950 outline-none'
 				>
 					Finishing up
 				</h2>
@@ -30,7 +30,8 @@ export default function StepSummary({ data, onCurrentStep, headingRef }) {
 							<div className='flex items-center justify-between'>
 								<div>
 									<dt className='font-medium text-sm text-primary-blue-950 capitalize leading-tight'>
-										{data.plan?.name ?? 'No plan selected'} ({data.billing})
+										{data.plan?.name ?? 'No plan selected'}{' '}
+										({data.billing})
 									</dt>
 									<dd>
 										<button

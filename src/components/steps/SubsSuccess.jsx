@@ -2,10 +2,15 @@ import thanksIcon from '../../images/icon-thank-you.svg';
 
 export default function SubsSuccess({ headingRef }) {
 	return (
-		<div className='px-4 pt-7 pb-5'>
-			<div className='bg-neutral-white rounded-lg px-6 py-19 shadow-lg relative -translate-y-25 max-w-sm mx-auto'>
+		<div className='px-4 pt-7 pb-5 lg:px-20 lg:flex lg:items-center lg:justify-center'>
+			<div className='bg-neutral-white rounded-lg px-6 py-14 lg:p-0 shadow-lg lg:shadow-none lg:max-w-md relative -translate-y-25 max-w-sm mx-auto lg:translate-y-0'>
 				<div className='flex flex-col gap-4 items-center text-center'>
-					<img src={thanksIcon} alt='' aria-hidden='true' className='size-15' />
+					<img
+						src={thanksIcon}
+						alt=''
+						aria-hidden='true'
+						className='size-15'
+					/>
 					<h2
 						ref={headingRef}
 						tabIndex={-1}

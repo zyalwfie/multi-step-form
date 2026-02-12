@@ -128,8 +128,8 @@ export default function App() {
 	}
 
 	return (
-		<section className='min-h-svh flex items-center justify-center bg-neutral-blue-100'>
-			<div className='bg-neutral-white grid grid-cols-1 lg:grid-cols-[auto_auto] shadow-lg lg:p-4 lg:rounded-xl'>
+		<section className='lg:min-h-svh lg:flex lg:items-center lg:justify-center lg:bg-neutral-blue-100'>
+			<div className='bg-neutral-white grid grid-cols-1 lg:grid-cols-[auto_auto] lg:shadow-lg lg:p-4 lg:rounded-xl'>
 				<StepSidebar
 					currentStep={currentStep}
 					onCurrentStep={onCurrentStep}
